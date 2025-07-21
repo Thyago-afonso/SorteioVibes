@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Sorteio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-body">
+
+<div id="loginArea">
+    <h1>Administrador</h1>
+  <input type="password" id="senha" />
+  <button onclick="verificarSenha()">Entrar</button>
+</div>
+
+<div id="painelAdmin" style="display:none;">
+  <button id="btnCarregar">Carregar Participantes</button>
+  <ul id="listaParticipantes"></ul>
+  <button id="btnSortear">Sortear Ganhador</button>
+  <div id="ganhador"></div>
+</div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
