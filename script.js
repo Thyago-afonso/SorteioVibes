@@ -30,15 +30,17 @@ const handleSubmit = async (event) => {
       return;
     }
 
-    // 🔁 SUBSTITUI AQUI: POST dos dados
-    await fetch('https://script.google.com/macros/s/AKfycbwQc2D0oSXcuwMkpmAhh63ErIUCgZhkths2swb148VCtiYhLZ5c4Q-wLCG0E3oGgm0hCw/exec', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ name, email, numero })
-    });
+      await fetch('https://script.google.com/macros/s/AKfycbwQc2D0oSXcuwMkpmAhh63ErIUCgZhkths2swb148VCtiYhLZ5c4Q-wLCG0hE3oGgm0hCw/exec', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: new URLSearchParams({
+              name,
+              email,
+              numero
+          })
+      });
 
     alert("Cadastro realizado com sucesso!");
     form.reset();
