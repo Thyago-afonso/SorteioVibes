@@ -30,7 +30,7 @@ const handleSubmit = async (event) => {
       return;
     }
 
-      await fetch('https://script.google.com/macros/s/AKfycbwQc2D0oSXcuwMkpmAhh63ErIUCgZhkths2swb148VCtiYhLZ5c4Q-wLCG0hE3oGgm0hCw/exec', {
+      await fetch('https://script.google.com/macros/s/AKfycbwQc2D0oSXcuwMkpmAhh63ErIUCgZhkths2swb148VCtiYhLZ5c4Q-wLCG0E3oGgm0hCw/exec', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
