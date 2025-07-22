@@ -1,0 +1,138 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background-color: #0a0a0a;
+  color: #ffffff;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Container geral (formulário ou admin) */
+.container {
+  width: 100%;
+  max-width: 500px;
+}
+
+/* Títulos */
+h1, h2, h3 {
+  color: #00bfff;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Formulários e seções */
+form, #login, #painelAdmin {
+  background-color: #141414;
+  padding: 25px;
+  border: 2px solid #007bff;
+  border-radius: 12px;
+  box-shadow: 0 0 15px #007bff99;
+  margin-bottom: 30px;
+}
+
+/* Inputs e botões gerais */
+input, button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-top: 12px;
+  transition: all 0.3s ease;
+}
+
+/* Inputs */
+input {
+  background-color: #1e1e1e;
+  color: #fff;
+  border: 1px solid #444;
+}
+
+input:focus {
+  outline: none;
+  border-color: #00bfff;
+  box-shadow: 0 0 10px #00bfff66;
+}
+
+input::placeholder {
+  color: #aaa;
+}
+
+/* Botões */
+button {
+  background-color: transparent;
+  color: #ffffff;
+  border: 2px solid #00bfff;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  box-shadow: 0 0 10px #00bfff55;
+}
+
+button:hover {
+  background-color: #00bfff;
+  color: #fff;
+  box-shadow: 0 0 20px #00bfffaa;
+  transform: scale(1.03);
+}
+
+/* Mensagens */
+#msg {
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Lista de participantes */
+ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 20px;
+}
+
+ul li {
+  background-color: #1a1a1a;
+  margin-bottom: 10px;
+  padding: 12px;
+  border-left: 4px solid #00bfff;
+  border-radius: 6px;
+  color: #ffffff;
+}
+
+/* Link admin */
+.admin-link {
+  display: block;
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+  color: #00bfff;
+  text-decoration: none;
+}
+
+.admin-link:hover {
+  text-decoration: underline;
+}
+
+/* Animação de loading */
+.loading {
+  width: 25px;
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
