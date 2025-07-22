@@ -1,15 +1,16 @@
-// api/submit.js
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbwQc2D0oSXcuwMkpmAhh63ErIUCgZhkths2swb148VCtiYhLZ5c4Q-wLCG0E3oGgm0hCw/exec';
 
     try {
+      const { name, email, numero } = req.body;
+
       const response = await fetch(googleScriptUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: new URLSearchParams(req.body).toString(), // re-encoda o body recebido do frontend
+        body: new URLSearchParams({ name, email, numero }).toString(),
       });
 
       const data = await response.json();
