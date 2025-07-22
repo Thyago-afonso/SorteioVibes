@@ -18,8 +18,12 @@ const handleSubmit = async (event) => {
   const numero = document.querySelector('input[name=numero]').value.trim();
 
   try {
-    // 🔁 SUBSTITUI AQUI: GET dos dados para verificar duplicado
-    const response = await fetch('https://script.google.com/macros/s/AKfycbwQc2D0oSXcuwMkpmAhh63ErIUCgZhkths2swb148VCtiYhLZ5c4Q-wLCG0E3oGgm0hCw/exec');
+    // 🔁 MUDANÇA AQUI: GET dos dados para verificar duplicado, agora via Vercel Function
+    const response = await fetch('/api/get-data'); // Chama sua Vercel Function
+    if (!response.ok) { // Verifica se a resposta da Vercel Function foi bem-sucedida
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Erro ao carregar dados para verificação.');
+    }
     const dados = await response.json();
 
     const jaExiste = dados.some(participante => participante.numero === numero);
@@ -30,22 +34,28 @@ const handleSubmit = async (event) => {
       return;
     }
 
-      await fetch('https://script.google.com/macros/s/AKfycbwQc2D0oSXcuwMkpmAhh63ErIUCgZhkths2swb148VCtiYhLZ5c4Q-wLCG0E3oGgm0hCw/exec', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: new URLSearchParams({
-              name,
-              email,
-              numero
-          })
-      });
+    // 🔁 MUDANÇA AQUI: POST dos dados, agora via Vercel Function
+    const submitResponse = await fetch('/api/submit', { // Chama sua Vercel Function
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json', // Envia JSON para sua Vercel Function
+      },
+      body: JSON.stringify({ // Converte os dados para JSON
+        name,
+        email,
+        numero
+      })
+    });
+
+    if (!submitResponse.ok) { // Verifica se a resposta da Vercel Function foi bem-sucedida
+      const errorData = await submitResponse.json();
+      throw new Error(errorData.error || 'Erro ao enviar os dados através do proxy.');
+    }
 
     alert("Cadastro realizado com sucesso!");
     form.reset();
   } catch (err) {
-    alert("Erro ao enviar os dados.");
+    alert("Erro ao enviar os dados: " + err.message);
   } finally {
     removeLoading();
   }
