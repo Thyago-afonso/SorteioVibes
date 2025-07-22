@@ -5,11 +5,10 @@ export default async function handler(req, res) {
       'https://script.google.com/macros/s/AKfycbwQc2D0oSXcuwMkpmAhh63ErIUCgZhkths2swb148VCtiYhLZ5c4Q-wLCG0E3oGgm0hCw/exec';
 
     try {
-      // Força o parse do body, com fallback
       let body = req.body;
-      if (typeof req.body === 'string') {
+      if (typeof body === 'string') {
         console.log('🔍 Body recebido como string. Fazendo JSON.parse...');
-        body = JSON.parse(req.body);
+        body = JSON.parse(body);
       }
 
       const { name, email, numero } = body;
@@ -27,10 +26,9 @@ export default async function handler(req, res) {
       });
 
       const text = await response.text();
-
       console.log('✅ Resposta do Google Script:', text);
 
-      return res.status(response.status).json({ message: 'Dados enviados com sucesso.' });
+      return res.status(200).json({ message: 'Dados enviados com sucesso.' });
     } catch (error) {
       console.error('❌ Erro ao processar o submit.js:', error);
       return res.status(500).json({ error: 'Erro interno do servidor ao processar sua requisição.' });
