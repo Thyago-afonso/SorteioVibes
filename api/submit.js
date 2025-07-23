@@ -14,19 +14,20 @@ export default async function handler(req, res) {
       const { name, email, numero } = body;
       console.log('📦 Dados recebidos no submit.js:', { name, email, numero });
 
+      // Alteração: Usando URLSearchParams para formatar os dados
       const payload = new URLSearchParams({ name, email, numero }).toString();
 
       console.log('➡️ Enviando dados para Google Script...');
       const response = await fetch(googleScriptUrl, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/x-www-form-urlencoded', // Alterado para application/x-www-form-urlencoded
         },
         body: payload,
       });
 
       const text = await response.text();
-      console.log('✅ Resposta do Google Script:', text);
+      console.log('✅ Resposta do Google Script:', text); // Log da resposta do Google Script
 
       return res.status(200).json({ message: 'Dados enviados com sucesso.' });
     } catch (error) {
