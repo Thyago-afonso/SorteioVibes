@@ -16,7 +16,7 @@ body {
   min-height: 100vh;
 }
 
-/* Container geral (formulário ou admin) */
+/* Container geral */
 .container {
   width: 100%;
   max-width: 500px;
@@ -24,7 +24,7 @@ body {
 
 /* Títulos */
 h1, h2, h3 {
-  color: #00bfff;
+  color: #ffc107; /* Amarelo */
   text-align: center;
   margin-bottom: 20px;
 }
@@ -33,13 +33,13 @@ h1, h2, h3 {
 form, #login, #painelAdmin {
   background-color: #141414;
   padding: 25px;
-  border: 2px solid #007bff;
+  border: 2px solid #ffc107;
   border-radius: 12px;
-  box-shadow: 0 0 15px #007bff99;
+  box-shadow: 0 0 15px #ffc10788;
   margin-bottom: 30px;
 }
 
-/* Inputs e botões gerais */
+/* Inputs e botões */
 input, button {
   width: 100%;
   padding: 12px;
@@ -58,8 +58,8 @@ input {
 
 input:focus {
   outline: none;
-  border-color: #00bfff;
-  box-shadow: 0 0 10px #00bfff66;
+  border-color: #ffc107;
+  box-shadow: 0 0 10px #ffc10766;
 }
 
 input::placeholder {
@@ -70,17 +70,17 @@ input::placeholder {
 button {
   background-color: transparent;
   color: #ffffff;
-  border: 2px solid #00bfff;
+  border: 2px solid #ffc107;
   font-weight: bold;
   cursor: pointer;
   margin-top: 20px;
-  box-shadow: 0 0 10px #00bfff55;
+  box-shadow: 0 0 10px #ffc10755;
 }
 
 button:hover {
-  background-color: #00bfff;
-  color: #fff;
-  box-shadow: 0 0 20px #00bfffaa;
+  background-color: #ffc107;
+  color: #000;
+  box-shadow: 0 0 20px #ffc107aa;
   transform: scale(1.03);
 }
 
@@ -102,7 +102,7 @@ ul li {
   background-color: #1a1a1a;
   margin-bottom: 10px;
   padding: 12px;
-  border-left: 4px solid #00bfff;
+  border-left: 4px solid #ffc107;
   border-radius: 6px;
   color: #ffffff;
 }
@@ -113,7 +113,7 @@ ul li {
   text-align: center;
   margin-top: 15px;
   font-size: 14px;
-  color: #00bfff;
+  color: #ffc107;
   text-decoration: none;
 }
 

@@ -1,26 +1,57 @@
+// admin.js
+
+let participantes = [];
+
 const btnCarregar = document.getElementById('btnCarregar');
 const btnSortear = document.getElementById('btnSortear');
 const lista = document.getElementById('listaParticipantes');
 const ganhadorDiv = document.getElementById('ganhador');
 
-// Lógica de senha (⚠️ Lembre-se que esta senha no JS não é segura para produção)
-function verificarSenha() {
-  const senha = document.getElementById("senha").value;
-  if (senha === "123456") {
-    document.getElementById("loginArea").style.display = "none";
-    document.getElementById("painelAdmin").style.display = "block";
-  } else {
-    alert("Senha incorreta!");
+// IDs dos elementos para login com Google
+const painelAdmin = document.getElementById("painelAdmin");
+const userEmailSpan = document.getElementById("user-email");
+
+// Função chamada após login com Google (via Google Identity Services)
+async function handleCredentialResponse(response) {
+  const idToken = response.credential;
+
+  try {
+    const res = await fetch('http://localhost:3000/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ idToken })
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      document.querySelector('.g_id_signin').style.display = 'none';
+      painelAdmin.style.display = 'block';
+      userEmailSpan.textContent = data.email;
+    } else {
+      alert(data.message || 'Acesso negado.');
+    }
+  } catch (err) {
+    console.error('Erro no login:', err);
+    alert('Erro ao verificar token de login.');
   }
 }
 
-let participantes = [];
+// Botão logout (opcional)
+async function logout() {
+  await fetch('http://localhost:3000/api/logout', {
+    method: 'POST',
+    credentials: 'include'
+  });
+  window.location.reload();
+}
 
+// Botão "Carregar Participantes"
 btnCarregar.addEventListener('click', () => {
-  // 🔁 MUDANÇA AQUI: Carrega participantes agora via Vercel Function
-  fetch('/api/get-data') // Chama sua Vercel Function
+  fetch('/api/get-data')
     .then(res => {
-      if (!res.ok) { // Verifica se a resposta da Vercel Function foi bem-sucedida
+      if (!res.ok) {
         throw new Error('Erro na requisição da Vercel Function.');
       }
       return res.json();
@@ -30,7 +61,6 @@ btnCarregar.addEventListener('click', () => {
       lista.innerHTML = '';
       data.forEach(p => {
         const li = document.createElement('li');
-        // Adicionando o número para facilitar a visualização no admin, se desejar
         li.textContent = `${p.name} - ${p.email} - ${p.numero}`;
         lista.appendChild(li);
       });
@@ -41,6 +71,7 @@ btnCarregar.addEventListener('click', () => {
     });
 });
 
+// Botão "Sortear"
 btnSortear.addEventListener('click', () => {
   if (participantes.length === 0) {
     alert("Nenhum participante carregado.");
