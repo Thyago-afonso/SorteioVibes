@@ -18,9 +18,8 @@ const handleSubmit = async (event) => {
   const numero = document.querySelector('input[name=numero]').value.trim();
 
   try {
-    // 🔁 MUDANÇA AQUI: GET dos dados para verificar duplicado, agora via Vercel Function
-    const response = await fetch('/api/get-data'); // Chama sua Vercel Function
-    if (!response.ok) { // Verifica se a resposta da Vercel Function foi bem-sucedida
+    const response = await fetch('/api/get-data'); // GET via Vercel Function
+    if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.error || 'Erro ao carregar dados para verificação.');
     }
@@ -34,22 +33,17 @@ const handleSubmit = async (event) => {
       return;
     }
 
-    // 🔁 MUDANÇA AQUI: POST dos dados, agora via Vercel Function
-    const submitResponse = await fetch('/api/submit', { // Chama sua Vercel Function
+    const submitResponse = await fetch('/api/submit', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json', // Envia JSON para sua Vercel Function
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ // Converte os dados para JSON
-        name,
-        email,
-        numero
-      })
+      body: JSON.stringify({ name, email, numero })
     });
 
-    if (!submitResponse.ok) { // Verifica se a resposta da Vercel Function foi bem-sucedida
+    if (!submitResponse.ok) {
       const errorData = await submitResponse.json();
-      throw new Error(errorData.error || 'Erro ao enviar os dados através do proxy.');
+      throw new Error(errorData.error || 'Erro ao enviar os dados.');
     }
 
     alert("Cadastro realizado com sucesso!");
