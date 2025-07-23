@@ -136,3 +136,18 @@ ul li {
     transform: rotate(360deg);
   }
 }
+
+.g_id_signin {
+  display: flex !important;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+button {
+  background-color: transparent;
+  color: #ffffff;
+  border: 2px solid #FFD700;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 10px #FFD70055;
+}

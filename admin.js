@@ -1,22 +1,23 @@
-// admin.js
-
 let participantes = [];
 
 const btnCarregar = document.getElementById('btnCarregar');
 const btnSortear = document.getElementById('btnSortear');
 const lista = document.getElementById('listaParticipantes');
 const ganhadorDiv = document.getElementById('ganhador');
-
-// IDs dos elementos para login com Google
 const painelAdmin = document.getElementById("painelAdmin");
 const userEmailSpan = document.getElementById("user-email");
 
-// Função chamada após login com Google (via Google Identity Services)
+// Detecta ambiente (localhost ou produção)
+const apiBase = window.location.hostname === 'localhost'
+  ? 'http://localhost:3000'
+  : 'https://sorteio-vibes.vercel.app'; // Altere aqui se seu domínio for diferente
+
+// 🔐 Função chamada após login com Google
 async function handleCredentialResponse(response) {
   const idToken = response.credential;
 
   try {
-    const res = await fetch('http://localhost:3000/api/login', {
+    const res = await fetch(`${apiBase}/api/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
@@ -38,18 +39,18 @@ async function handleCredentialResponse(response) {
   }
 }
 
-// Botão logout (opcional)
+// 🔓 Função de logout
 async function logout() {
-  await fetch('http://localhost:3000/api/logout', {
+  await fetch(`${apiBase}/api/logout`, {
     method: 'POST',
     credentials: 'include'
   });
   window.location.reload();
 }
 
-// Botão "Carregar Participantes"
+// 🔁 Botão "Carregar Participantes"
 btnCarregar.addEventListener('click', () => {
-  fetch('/api/get-data')
+  fetch('/api/get-data') // ← essa URL é da Vercel Function
     .then(res => {
       if (!res.ok) {
         throw new Error('Erro na requisição da Vercel Function.');
@@ -71,7 +72,7 @@ btnCarregar.addEventListener('click', () => {
     });
 });
 
-// Botão "Sortear"
+// 🎯 Botão "Sortear"
 btnSortear.addEventListener('click', () => {
   if (participantes.length === 0) {
     alert("Nenhum participante carregado.");
