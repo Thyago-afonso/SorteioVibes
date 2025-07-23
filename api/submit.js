@@ -1,40 +1,48 @@
-// api/submit.js
-export default async function handler(req, res) {
-  if (req.method === 'POST') {
-    const googleScriptUrl =
-      'https://script.google.com/macros/s/AKfycbwQc2D0oSXcuwMkpmAhh63ErIUCgZhkths2swb148VCtiYhLZ5c4Q-wLCG0E3oGgm0hCw/exec';
+const form = document.querySelector('form');
+const button = form.querySelector('button');
 
-    try {
-      let body = req.body;
-      if (typeof body === 'string') {
-        console.log('🔍 Body recebido como string. Fazendo JSON.parse...');
-        body = JSON.parse(body);
-      }
+const addLoading = () => {
+  button.innerHTML = '<img src="loading.png" class="loading">';
+};
 
-      const { name, email, numero } = body;
-      console.log('📦 Dados recebidos no submit.js:', { name, email, numero });
+const removeLoading = () => {
+  button.innerHTML = 'Enviar';
+};
 
-      // Alteração: Usando URLSearchParams para formatar os dados
-      const payload = new URLSearchParams({ name, email, numero }).toString();
+const handleSubmit = async (event) => {
+  event.preventDefault();
+  addLoading();
 
-      console.log('➡️ Enviando dados para Google Script...');
-      const response = await fetch(googleScriptUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded', // Alterado para application/x-www-form-urlencoded
-        },
-        body: payload,
-      });
+  const name = document.querySelector('input[name=name]').value.trim();
+  const email = document.querySelector('input[name=email]').value.trim();
+  const numero = document.querySelector('input[name=numero]').value.trim();
 
-      const text = await response.text();
-      console.log('✅ Resposta do Google Script:', text); // Log da resposta do Google Script
+  try {
+    // Envia os dados para o Google Apps Script
+    const submitResponse = await fetch("https://script.google.com/macros/s/AKfycbzYCcjyjwqAZfCzn6ZMFjqN-bP7YgPCmC_8NGmn50qb7ZQ69SecW7VSpdgBtGCmHNuHPA/exec", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded', // Envia como URL encoded
+      },
+      body: new URLSearchParams({
+        name: name,
+        email: email,
+        numero: numero
+      })
+    });
 
-      return res.status(200).json({ message: 'Dados enviados com sucesso.' });
-    } catch (error) {
-      console.error('❌ Erro ao processar o submit.js:', error);
-      return res.status(500).json({ error: 'Erro interno do servidor ao processar sua requisição.' });
+    if (!submitResponse.ok) {
+      const errorData = await submitResponse.json();
+      throw new Error(errorData.error || 'Erro ao enviar os dados através do Google Apps Script.');
     }
-  } else {
-    return res.status(405).json({ message: 'Método não permitido.' });
+
+    alert("Cadastro realizado com sucesso!");
+    form.reset();
+  } catch (err) {
+    alert("Erro ao enviar os dados: " + err.message);
+  } finally {
+    removeLoading();
   }
-}
+};
+
+form.addEventListener('submit', handleSubmit);
