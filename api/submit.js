@@ -4,6 +4,8 @@ export default async function handler(req, res) {
     const googleScriptUrl =
       'https://script.google.com/macros/s/AKfycbzYCcjyjwqAZfCzn6ZMFjqN-bP7YgPCmC_8NGmn50qb7ZQ69SecW7VSpdgBtGCmHNuHPA/exec';
 
+    //so para subir pro github
+
     try {
       let body = req.body;
       if (typeof body === 'string') {
