@@ -7,17 +7,21 @@ const ganhadorDiv = document.getElementById('ganhador');
 const painelAdmin = document.getElementById("painelAdmin");
 const userEmailSpan = document.getElementById("user-email");
 
-// Verifica token salvo ao abrir a página
+const apiBase = window.location.hostname === 'localhost'
+  ? 'http://localhost:3000'
+  : 'https://sorteio-vibes.vercel.app';
+
 window.addEventListener('DOMContentLoaded', async () => {
   const token = localStorage.getItem('idToken');
   const email = localStorage.getItem('email');
 
   if (token) {
     try {
-      const res = await fetch('/api/verify-token', {
+      const res = await fetch(`${apiBase}/api/verify-token`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ idToken: token })
+        body: JSON.stringify({ idToken: token }),
+        credentials: 'include'
       });
 
       const data = await res.json();
@@ -37,27 +41,21 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
-
-// Detecta ambiente (localhost ou produção)
-const apiBase = window.location.hostname === 'localhost'
-  ? 'http://localhost:3000'
-  : 'https://sorteio-vibes.vercel.app'; // Altere aqui se seu domínio for diferente
-
 async function handleCredentialResponse(response) {
   const idToken = response.credential;
   console.log('🪪 Token JWT recebido do Google:', idToken);
 
   try {
-    const res = await fetch('/api/verify-token', {
+    const res = await fetch(`${apiBase}/api/verify-token`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ idToken })
+      body: JSON.stringify({ idToken }),
+      credentials: 'include'
     });
 
     const data = await res.json();
 
     if (res.ok) {
-      // Armazena token e email
       localStorage.setItem('idToken', idToken);
       localStorage.setItem('email', data.email);
 
@@ -79,10 +77,12 @@ function logout() {
 }
 
 btnCarregar.addEventListener('click', () => {
-  fetch('/api/get-data') 
+  fetch(`${apiBase}/api/get-data`, {
+    credentials: 'include'
+  })
     .then(res => {
       if (!res.ok) {
-        throw new Error('Erro na requisição da Vercel Function.');
+        throw new Error('Erro na requisição protegida da API.');
       }
       return res.json();
     })
@@ -101,7 +101,7 @@ btnCarregar.addEventListener('click', () => {
     });
 });
 
-// 🎯 Botão "Sortear"
+
 btnSortear.addEventListener('click', () => {
   if (participantes.length === 0) {
     alert("Nenhum participante carregado.");

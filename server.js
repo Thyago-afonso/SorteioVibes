@@ -1,5 +1,20 @@
 console.log(req.body);
 
+app.get('/api/get-data', async (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).json({ error: 'Não autorizado.' });
+  }
+
+  try {
+    const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbwQc2D0oSXcuwMkpmAhh63ErIUCgZhkths2swb148VCtiYhLZ5c4Q-wLCG0E3oGgm0hCw/exec';
+    const response = await fetch(googleScriptUrl);
+    const data = await response.json();
+    return res.status(200).json(data);
+  } catch (err) {
+    console.error('Erro ao carregar dados:', err);
+    return res.status(500).json({ error: 'Erro ao carregar os dados.' });
+  }
+});
 
 const express = require('express');
 const bodyParser = require('body-parser');
