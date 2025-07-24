@@ -1,4 +1,6 @@
-// server.js
+console.log(req.body);
+
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const { OAuth2Client } = require('google-auth-library');
@@ -16,7 +18,7 @@ const authorizedEmails = [
 
 const app = express();
 app.use(cors({
-  origin: 'http://localhost:5500', // ou o endereço do seu site
+origin: ['http://localhost:5500', 'https://sorteio-vibes.vercel.app'],
   credentials: true
 }));
 app.use(bodyParser.json());

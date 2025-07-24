@@ -15,7 +15,7 @@ const apiBase = window.location.hostname === 'localhost'
 // 🔐 Função chamada após login com Google
 async function handleCredentialResponse(response) {
   const idToken = response.credential;
-
+  console.log('Token JWT recebido do Google:', idToken);
   try {
     const res = await fetch(`${apiBase}/api/login`, {
       method: 'POST',
@@ -39,7 +39,6 @@ async function handleCredentialResponse(response) {
   }
 }
 
-// 🔓 Função de logout
 async function logout() {
   await fetch(`${apiBase}/api/logout`, {
     method: 'POST',
@@ -48,9 +47,8 @@ async function logout() {
   window.location.reload();
 }
 
-// 🔁 Botão "Carregar Participantes"
 btnCarregar.addEventListener('click', () => {
-  fetch('/api/get-data') // ← essa URL é da Vercel Function
+  fetch('/api/get-data') 
     .then(res => {
       if (!res.ok) {
         throw new Error('Erro na requisição da Vercel Function.');
