@@ -11,7 +11,7 @@ const authorizedEmails = [
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Método não permitido' });
+    return res.status(405).json({ message: 'Método não permitido.' });
   }
 
   const { idToken } = req.body;
@@ -19,19 +19,19 @@ export default async function handler(req, res) {
   try {
     const ticket = await client.verifyIdToken({
       idToken,
-      audience: CLIENT_ID,
+      audience: CLIENT_ID
     });
 
     const payload = ticket.getPayload();
     const email = payload.email;
 
     if (!authorizedEmails.includes(email)) {
-      return res.status(403).json({ message: 'E-mail não autorizado' });
+      return res.status(403).json({ message: 'Acesso negado.' });
     }
 
-    return res.status(200).json({ message: 'Token válido', email });
+    return res.status(200).json({ email });
   } catch (error) {
-    console.error('Erro ao verificar token:', error);
+    console.error('Erro na verificação de token:', error);
     return res.status(401).json({ message: 'Token inválido' });
   }
 }
