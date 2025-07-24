@@ -1,40 +1,48 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Sorteio</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="favicon.png" type="image/png" />
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Área Administrativa</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
-  <h1>Área Administrativa</h1>
+  <div class="container">
+    <h1>Área Administrativa</h1>
 
-  <!-- Login com Google -->
-  <div id="g_id_onload"
-       data-client_id="981725293339-ekqct59vomked91n5ba9mpjetdm5ojud.apps.googleusercontent.com"
-       data-callback="handleCredentialResponse"
-       data-auto_prompt="false">
-  </div>
-  <div class="g_id_signin" data-type="standard"></div>
+    <!-- Login Google -->
+    <div id="login">
+      <div
+        id="g_id_onload"
+        data-client_id="981725293339-ekqct59vomked91n5ba9mpjetdm5ojud.apps.googleusercontent.com"
+        data-callback="handleCredentialResponse"
+        data-auto_prompt="false"
+      ></div>
 
-  <!-- Painel visível só se estiver logado -->
-  <div id="admin-panel" style="display:none;">
-    <h2>Bem-vindo, <span id="user-email"></span></h2>
-    <button onclick="logout()">Sair</button>
-  </div>
-
-    <button id="btnCarregar">Carregar Participantes</button>
-    <ul id="listaParticipantes"></ul>
-    
-    <button id="btnSortear">Sortear</button>
-    <div id="ganhador"></div>
+      <div
+        class="g_id_signin"
+        data-type="standard"
+        data-size="large"
+        data-theme="outline"
+        data-text="sign_in_with"
+        data-shape="rectangular"
+        data-logo_alignment="left"
+      ></div>
     </div>
 
-  <!-- Seu script separado -->
-  <script src="js/admin.js"></script>
+    <!-- Painel de controle (aparece só após login autorizado) -->
+    <div id="painelAdmin" style="display: none;">
+      <p style="margin-bottom: 10px; color: #ccc;">Logado como <span id="userEmailSpan"></span></p>
+
+      <button id="btnCarregar">Carregar Participantes</button>
+      <button id="btnSortear">Sortear</button>
+
+      <ul id="listaParticipantes"></ul>
+      <div id="ganhador" style="margin-top: 20px; font-size: 18px;"></div>
+    </div>
+  </div>
+  <script src="server.js"></script>
+  <script src="admin.js"></script>
 </body>
 </html>

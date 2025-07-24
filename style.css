@@ -10,9 +10,6 @@ body {
   background-color: #0a0a0a;
   color: #ffffff;
   padding: 40px 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   min-height: 100vh;
 }
 
@@ -20,11 +17,12 @@ body {
 .container {
   width: 100%;
   max-width: 500px;
+  margin: 0 auto;
 }
 
 /* Títulos */
 h1, h2, h3 {
-  color: #ffc107; /* Amarelo */
+  color: #ffc107;
   text-align: center;
   margin-bottom: 20px;
 }
@@ -41,7 +39,6 @@ form, #login, #painelAdmin {
 
 /* Inputs e botões */
 input, button {
-  width: 100%;
   padding: 12px;
   border-radius: 8px;
   font-size: 16px;
@@ -54,6 +51,7 @@ input {
   background-color: #1e1e1e;
   color: #fff;
   border: 1px solid #444;
+  width: 100%;
 }
 
 input:focus {
@@ -75,6 +73,7 @@ button {
   cursor: pointer;
   margin-top: 20px;
   box-shadow: 0 0 10px #ffc10755;
+  width: 100%;
 }
 
 button:hover {
@@ -82,6 +81,21 @@ button:hover {
   color: #000;
   box-shadow: 0 0 20px #ffc107aa;
   transform: scale(1.03);
+}
+
+/* Painel Admin específico */
+#admin-panel {
+  max-width: 600px;
+  margin: 40px auto;
+  text-align: center;
+}
+
+/* Botões em linha na admin */
+#btnCarregar,
+#btnSortear {
+  display: inline-block;
+  width: 48%;
+  margin: 10px 1%;
 }
 
 /* Mensagens */
@@ -143,11 +157,22 @@ ul li {
   margin-top: 20px;
 }
 
-button {
-  background-color: transparent;
-  color: #ffffff;
-  border: 2px solid #FFD700;
+/* Corrigido espaçamento automático dos botões */
+#btnCarregar,
+#btnSortear {
+  max-width: 260px;
+}
+
+#ganhador {
+  margin-top: 30px;
+  font-size: 18px;
+  text-align: center;
+  color: #0f0;
   font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 0 10px #FFD70055;
+}
+
+h1:hover {
+  text-shadow: 0 0 10px #ffc107, 0 0 20px #ffc10788;
+  transform: scale(1.02);
+  transition: all 0.3s ease;
 }
