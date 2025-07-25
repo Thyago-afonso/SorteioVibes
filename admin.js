@@ -108,10 +108,16 @@ btnSortear.addEventListener('click', () => {
     return;
   }
 
-  const indice = Math.floor(Math.random() * participantes.length);
+   const indice = Math.floor(Math.random() * participantes.length);
   const ganhador = participantes[indice];
 
+  // Verifica se os dados têm "name" ou "nome"
+  const nome = ganhador.name || ganhador.nome || "Nome não informado";
+  const numero = ganhador.numero || "Número não informado";
+
   document.getElementById('ganhador').innerHTML = `
-    🎉 <strong>Ganhador:</strong> ${ganhador.nome} (${ganhador.numero})
+    🎉 <strong>Ganhador:</strong><br>
+    <span style="font-size: 1.4em; color: #fff;">${nome}</span><br>
+    📞 <span style="color: #0f0;">${numero}</span>
   `;
 });
