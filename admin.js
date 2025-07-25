@@ -108,6 +108,10 @@ btnSortear.addEventListener('click', () => {
     return;
   }
 
-  const sorteado = participantes[Math.floor(Math.random() * participantes.length)];
-  ganhadorDiv.textContent = `🎉 Ganhador: ${sorteado.name} (${sorteado.email}) - Número: ${sorteado.numero}`;
+  const indice = Math.floor(Math.random() * participantes.length);
+  const ganhador = participantes[indice];
+
+  document.getElementById('ganhador').innerHTML = `
+    🎉 <strong>Ganhador:</strong> ${ganhador.nome} (${ganhador.numero})
+  `;
 });
